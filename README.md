@@ -17,3 +17,10 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId
 ```
 
 and alow i make powershell script for all this to
+## Usage
+
+1. **Open PowerShell as Administrator**.
+2. **Run the script**:
+
+```powershell
+.\GameBarPresenceWriterManager.ps1
