@@ -1,7 +1,5 @@
 # GameBarPresenceWriterManager
 
-[English](#english) | [العربية](#العربية)
-
 ---
 
 ## <a name="english"></a>Disable GameBarPresenceWriter
@@ -40,49 +38,6 @@ This PowerShell script allows you to manage the `GameBarPresenceWriter.exe` file
  - Open PowerShell as Administrator.
  - Navigate to the directory where the script is downloaded.
  - Run the script:
-   ```powershell
-   .\GameBarPresenceWriterManager.ps1
-   ```
-
----
-## <a name="العربية"></a>تعطيل GameBarPresenceWriter
-
-هذا موجه للأشخاص الذين انتقلوا مؤخرًا إلى Windows 11 ويعانون من انخفاضات متكررة في معدل الإطارات. كنت أحصل بشكل متكرر على انخفاضات من 350 إطارًا في الثانية إلى 130-140 حتى 70 إطارًا في الثانية، مما كان يعطل تجربتي. الآن معدل الإطارات ثابت عند 350، وحوالي 330-310 عند اللعب في 
-
-### يمكنك أيضًا تعطيل GameBarPresenceWriter
-
-#### باستخدام Regedit
-- انتقل إلى: `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter`
-- انقر نقرًا مزدوجًا على "ActivationType" وقم بتعيين القيمة إلى 0.
-
-#### باستخدام CMD
-- لتعطيل:
-```
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v ActivationType /t REG_DWORD /d 0 /f
-```
-- للتراجع:
-
-```
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v ActivationType /t REG_DWORD /d 1 /f
-```
-
-### برنامج PowerShell النصي
-
-#### GameBarPresenceWriterManager
-
-يسمح لك هذا البرنامج النصي في PowerShell بإدارة ملف `GameBarPresenceWriter.exe` من خلال تولي ملكيته، وإعادة تسمية الملف لحل مشكلات انخفاض معدل الإطارات، والتراجع عن التغييرات إذا لزم الأمر.
-
-#### طريقة الاستخدام
-
-1. **تنزيل البرنامج النصي:**
- - انتقل إلى صفحة [الإصدارات](../../releases).
- - قم بتنزيل أحدث إصدار من `GameBarPresenceWriterManager.ps1`.
-
-2. **تشغيل البرنامج النصي:**
- - افتح PowerShell كمسؤول.
- - انتقل إلى الدليل حيث تم تنزيل البرنامج النصي.
- - قم بتشغيل البرنامج النصي:
-   
    ```powershell
    .\GameBarPresenceWriterManager.ps1
    ```
