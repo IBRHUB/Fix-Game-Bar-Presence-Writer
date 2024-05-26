@@ -17,10 +17,20 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId
 ```
 
 and alow i make powershell script for all this to
+# GameBarPresenceWriterManager
+
+This PowerShell script allows you to manage the `GameBarPresenceWriter.exe` file by taking ownership, renaming the file to solve frame throttling issues, and reverting the changes if needed.
+
 ## Usage
 
-1. **Open PowerShell as Administrator**.
-2. **Run the script**:
+1. **Download the Script:**
+   - Go to the [Releases](../../releases) page.
+   - Download the latest version of `GameBarPresenceWriterManager.ps1`.
 
-```powershell
-.\GameBarPresenceWriterManager.ps1
+2. **Run the Script:**
+   - Open PowerShell as Administrator.
+   - Navigate to the directory where the script is downloaded.
+   - Run the script:
+
+   ```powershell
+   .\GameBarPresenceWriterManager.ps1
