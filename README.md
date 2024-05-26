@@ -83,6 +83,7 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId
  - افتح PowerShell كمسؤول.
  - انتقل إلى الدليل حيث تم تنزيل البرنامج النصي.
  - قم بتشغيل البرنامج النصي:
+   
    ```powershell
    .\GameBarPresenceWriterManager.ps1
    ```
