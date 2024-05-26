@@ -45,10 +45,10 @@ This PowerShell script allows you to manage the `GameBarPresenceWriter.exe` file
    ```
 
 ---
-
+---
 ## <a name="العربية"></a>تعطيل GameBarPresenceWriter
 
-هذا موجه للأشخاص الذين انتقلوا مؤخرًا إلى Windows 11 ويعانون من انخفاضات متكررة في معدل الإطارات. كنت أحصل بشكل متكرر على انخفاضات من 130 إطارًا في الثانية إلى 30-40 إطارًا في الثانية، مما كان يعطل تجربتي. الآن معدل الإطارات ثابت عند 125، وحوالي 90-100 عند اللعب في الوضع المحسن.
+هذا موجه للأشخاص الذين انتقلوا مؤخرًا إلى Windows 11 ويعانون من انخفاضات متكررة في معدل الإطارات. كنت أحصل بشكل متكرر على انخفاضات من 350 إطارًا في الثانية إلى 130-140 حتى 70 إطارًا في الثانية، مما كان يعطل تجربتي. الآن معدل الإطارات ثابت عند 350، وحوالي 330-310 عند اللعب في 
 
 ### يمكنك أيضًا تعطيل GameBarPresenceWriter
 
@@ -58,6 +58,7 @@ This PowerShell script allows you to manage the `GameBarPresenceWriter.exe` file
 
 #### باستخدام CMD
 - لتعطيل:
+```
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter" /v ActivationType /t REG_DWORD /d 0 /f
 ```
 - للتراجع:
