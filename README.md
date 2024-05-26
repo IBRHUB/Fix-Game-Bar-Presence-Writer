@@ -87,4 +87,3 @@ reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId
    .\GameBarPresenceWriterManager.ps1
    ```
 
-[English](#english) | [العربية](#العربية)
