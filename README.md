@@ -2,8 +2,6 @@
 
 ---
 
-## <a name="english"></a>Disable GameBarPresenceWriter
-
 This is for people that recently switched to Windows 11 and suffer from frequent fps drops. I would frequently get drops from 130fps down to 30-40 fps, which would throw off my grind. Now my fps sits at a steady 125, and around 90-100 when grinding in remastered.
 
 ### Also you can Disable GameBarPresenceWriter
