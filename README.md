@@ -2,8 +2,6 @@
 
 ---
 
-This is for people that recently switched to Windows 11 and suffer from frequent fps drops. I would frequently get drops from 360fps down to 130-140 fps, which would throw off my grind. Now my fps sits at a steady 340, and around 300-320 
-
 ### Also you can Disable GameBarPresenceWriter
 
 #### Using Regedit
