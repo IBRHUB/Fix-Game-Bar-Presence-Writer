@@ -1,11 +1,13 @@
-    If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator"))
-    {Start-Process PowerShell.exe -ArgumentList ("-NoProfile -ExecutionPolicy Bypass -File `"{0}`"" -f $PSCommandPath) -Verb RunAs
-    Exit}
-    $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + " (Administrator)"
-    $Host.UI.RawUI.BackgroundColor = "Black"
-	$Host.PrivateData.ProgressBackgroundColor = "Black"
-    $Host.PrivateData.ProgressForegroundColor = "White"
-    Clear-Host
+If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator"))
+{
+    Start-Process PowerShell.exe -ArgumentList ("-NoProfile -ExecutionPolicy Bypass -File `"{0}`"" -f $PSCommandPath) -Verb RunAs
+    Exit
+}
+
+$Host.UI.RawUI.BackgroundColor = "Black"
+$Host.PrivateData.ProgressBackgroundColor = "Black"
+$Host.PrivateData.ProgressForegroundColor = "White"
+Clear-Host
 
 function TakeOwnershipAndRename {
     Write-Host "Define the file path and new file name"
@@ -45,18 +47,80 @@ function RevertChanges {
     Write-Output "File ownership and permissions reverted to TrustedInstaller and renamed back to original."
 }
 
-Write-Host " Do you want to change the GameBarPresenceWriter file to .exe.old to solve the frame throttling problem?"
+function DisableFSOAndGameBarSupport {
+    Write-Host "Disabling FSO and Game Bar Support..."
+
+    $regCommands = @(
+        "HKCU:\System\GameConfigStore\GameDVR_DSEBehavior=2",
+        "HKCU:\System\GameConfigStore\GameDVR_DXGIHonorFSEWindowsCompatible=1",
+        "HKCU:\System\GameConfigStore\GameDVR_EFSEFeatureFlags=0",
+        "HKCU:\System\GameConfigStore\GameDVR_FSEBehavior=2",
+        "HKCU:\System\GameConfigStore\GameDVR_FSEBehaviorMode=2",
+        "HKCU:\System\GameConfigStore\GameDVR_HonorUserFSEBehaviorMode=1",
+        "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\__COMPAT_LAYER=~ DISABLEDXMAXIMIZEDWINDOWEDMODE",
+        "HKCU:\System\GameBar\GamePanelStartupTipIndex=3",
+        "HKCU:\System\GameBar\ShowStartupPanel=0",
+        "HKCU:\System\GameBar\UseNexusForGameBarEnabled=0",
+        "HKLM:\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter\ActivationType=0",
+        "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR\AllowGameDVR=0",
+        "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR\value=0",
+        "HKCU:\System\GameConfigStore\GameDVR_Enabled=0",
+        "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR\AppCaptureEnabled=0"
+    )
+
+    foreach ($command in $regCommands) {
+        $null = New-ItemProperty -Path $($command.Split('=')[0]) -Name $($command.Split('=')[1].Split('=')[0]) -Value $($command.Split('=')[1].Split('=')[1]) -PropertyType DWORD -Force
+    }
+
+    Write-Output "FSO and Game Bar Support disabled."
+}
+
+function EnableFSOAndGameBarSupport {
+    Write-Host "Enabling FSO and Game Bar Support..."
+
+    $regCommands = @(
+        "HKCU:\System\GameConfigStore\GameDVR_DSEBehavior=0",
+        "HKCU:\System\GameConfigStore\GameDVR_DXGIHonorFSEWindowsCompatible=0",
+        "HKCU:\System\GameConfigStore\GameDVR_EFSEFeatureFlags=0",
+        "HKCU:\System\GameConfigStore\GameDVR_FSEBehavior=0",
+        "HKCU:\System\GameConfigStore\GameDVR_FSEBehaviorMode=2",
+        "HKCU:\System\GameConfigStore\GameDVR_HonorUserFSEBehaviorMode=0",
+        "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\__COMPAT_LAYER",
+        "HKCU:\System\GameBar\GamePanelStartupTipIndex",
+        "HKCU:\System\GameBar\ShowStartupPanel",
+        "HKCU:\System\GameBar\UseNexusForGameBarEnabled",
+        "HKLM:\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter\ActivationType=1",
+        "HKLM:\SOFTWARE\Policies\Microsoft\Windows\GameDVR",
+        "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR\value=1",
+        "HKCU:\System\GameConfigStore\GameDVR_Enabled=1",
+        "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR\AppCaptureEnabled"
+    )
+
+    foreach ($command in $regCommands) {
+        if ($command -match "=") {
+            $regPath = $command.Split('=')[0]
+            $valueName = $command.Split('=')[1]
+            $null = Remove-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue
+        } else {
+            $null = Remove-Item -Path $command -ErrorAction SilentlyContinue
+        }
+    }
+
+    Write-Output "FSO and Game Bar Support enabled."
+}
+
+Write-Host "Do you want to modify FSO and Game Bar support settings?"
 Write-Host
-Write-Host " Select 'y' to modify the main file, 'n' to do nothing, or 'r' to revert the changes."
+Write-Host "Select 'd' to disable, 'e' to enable, or 'r' to revert changes."
 Write-Host
-$choice = Read-Host " Enter your choice (y/n/r)"
+$choice = Read-Host "Enter your choice (d/e/r)"
 
 switch ($choice.ToLower()) {
-    "y" {
-        TakeOwnershipAndRename
+    "d" {
+        DisableFSOAndGameBarSupport
     }
-    "n" {
-        Write-Host "No modifications made."
+    "e" {
+        EnableFSOAndGameBarSupport
     }
     "r" {
         RevertChanges
