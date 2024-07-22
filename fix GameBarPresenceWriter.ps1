@@ -9,7 +9,7 @@ Excluding those related to Xbox, Xbl, or BITS, and sets the SvcHostSplitDisable 
 .NOTES
 Author: Ibrahim
 Website: https://ibrpride.com
-Script Version: 1.0
+Script Version: 1.1
 Last Updated: July 2024
 #>
 
@@ -33,8 +33,7 @@ function Invoke-RegistryCommand {
         [string]$Path,
         [string]$Name,
         [string]$Type,
-        [string]$Data,
-        [string]$AdditionalArgs = ""
+        [string]$Data
     )
 
     $fullCommand = "Reg.exe {0} `{1}` /v `{2}` /t {3} /d `{4}` /f" -f $Command, $Path, $Name, $Type, $Data
@@ -148,36 +147,42 @@ function EnableFSOAndGameBarSupport {
 }
 
 # Main script logic
-Write-Host "Do you want to modify the GameBarPresenceWriter file to solve the frame throttling problem?" -ForegroundColor Yellow
-Write-Host "Enter 'y' to modify the main file, 'n' to do nothing, or 'r' to revert the changes." -ForegroundColor Yellow
-$choice = Read-Host "Enter your choice (y/n/r)"
+Write-Host "Choose an option:" -ForegroundColor Yellow
+Write-Host "1. Disable the GameBarPresenceWriter file." -ForegroundColor Yellow
+Write-Host "2. Revert the changes." -ForegroundColor Yellow
+Write-Host "3. Goto next." -ForegroundColor Yellow
+$choice = Read-Host "Enter your choice (1/2/3)"
 
-switch ($choice.ToLower()) {
-    "y" {
+switch ($choice) {
+    "1" {
         TakeOwnershipAndRename
     }
-    "n" {
-        Write-Host "No modifications made."
-    }
-    "r" {
+    "2" {
         RevertChanges
+    }
+    "3" {
+        Write-Host "No modifications made."
+        
     }
     default {
         Write-Host "Invalid choice. No action taken."
     }
 }
 
-Write-Host "Do you want to disable (d) or enable (e) FSO and Game Bar support, or revert (r) to previous settings?" -ForegroundColor Yellow
-$choice = Read-Host "Enter your choice (d/e/r)"
+Write-Host "Choose an option for FSO and Game Bar support:" -ForegroundColor Yellow
+Write-Host "1. Disable FSO and Game Bar support." -ForegroundColor Yellow
+Write-Host "2. Enable FSO and Game Bar support." -ForegroundColor Yellow
+Write-Host "3. Revert to previous settings." -ForegroundColor Yellow
+$choice = Read-Host "Enter your choice (1/2/3)"
 
-switch ($choice.ToLower()) {
-    "d" {
+switch ($choice) {
+    "1" {
         DisableFSOAndGameBarSupport
     }
-    "e" {
+    "2" {
         EnableFSOAndGameBarSupport
     }
-    "r" {
+    "3" {
         Write-Host "No changes made."
     }
     default {
