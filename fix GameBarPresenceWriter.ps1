@@ -37,7 +37,7 @@ function Invoke-RegistryCommand {
         [string]$AdditionalArgs = ""
     )
 
-    $fullCommand = "{0} {1}\{2} /v ""{3}"" /t {4} /d ""{5}"" /f {6}" -f $Command, $Path, $Name, $Type, $Data, $AdditionalArgs
+    $fullCommand = "Reg.exe {0} `{1}` /v `{2}` /t {3} /d `{4}` /f" -f $Command, $Path, $Name, $Type, $Data
 
     try {
         Write-Host "Running command:" -ForegroundColor Cyan
@@ -94,25 +94,25 @@ function DisableFSOAndGameBarSupport {
     Write-Host "Disabling FSO and Game Bar Support..." -ForegroundColor Cyan
 
     $commands = @(
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DSEBehavior"; Type = "REG_DWORD"; Data = "2"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DXGIHonorFSEWindowsCompatible"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_EFSEFeatureFlags"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehavior"; Type = "REG_DWORD"; Data = "2"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehaviorMode"; Type = "REG_DWORD"; Data = "2"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_HonorUserFSEBehaviorMode"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; Name = "__COMPAT_LAYER"; Type = "REG_SZ"; Data = "~ DISABLEDXMAXIMIZEDWINDOWEDMODE"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "GamePanelStartupTipIndex"; Type = "REG_DWORD"; Data = "3"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "ShowStartupPanel"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "UseNexusForGameBarEnabled"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter"; Name = "ActivationType"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR"; Name = "AllowGameDVR"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"; Name = "value"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_Enabled"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"; Name = "AppCaptureEnabled"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" }
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DSEBehavior"; Type = "REG_DWORD"; Data = "2" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DXGIHonorFSEWindowsCompatible"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_EFSEFeatureFlags"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehavior"; Type = "REG_DWORD"; Data = "2" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehaviorMode"; Type = "REG_DWORD"; Data = "2" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_HonorUserFSEBehaviorMode"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Add"; Path = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; Name = "__COMPAT_LAYER"; Type = "REG_SZ"; Data = "~DISABLEDXMAXIMIZEDWINDOWEDMODE" },
+        @{ Command = "Add"; Path = "HKCU\System\GameBar"; Name = "GamePanelStartupTipIndex"; Type = "REG_DWORD"; Data = "3" },
+        @{ Command = "Add"; Path = "HKCU\System\GameBar"; Name = "ShowStartupPanel"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKCU\System\GameBar"; Name = "UseNexusForGameBarEnabled"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter"; Name = "ActivationType"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR"; Name = "AllowGameDVR"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"; Name = "value"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_Enabled"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"; Name = "AppCaptureEnabled"; Type = "REG_DWORD"; Data = "0" }
     )
 
     foreach ($cmd in $commands) {
-        Invoke-RegistryCommand @cmd
+        Invoke-RegistryCommand -Command $cmd.Command -Path $cmd.Path -Name $cmd.Name -Type $cmd.Type -Data $cmd.Data
     }
 
     Write-Output "FSO and Game Bar Support disabled."
@@ -123,25 +123,25 @@ function EnableFSOAndGameBarSupport {
     Write-Host "Enabling FSO and Game Bar Support..." -ForegroundColor Cyan
 
     $commands = @(
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DSEBehavior"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DXGIHonorFSEWindowsCompatible"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_EFSEFeatureFlags"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehavior"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehaviorMode"; Type = "REG_DWORD"; Data = "2"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_HonorUserFSEBehaviorMode"; Type = "REG_DWORD"; Data = "0"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; Name = "__COMPAT_LAYER"; Type = "REG_SZ"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "GamePanelStartupTipIndex"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "ShowStartupPanel"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameBar"; Name = "UseNexusForGameBarEnabled"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter"; Name = "ActivationType"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR"; Name = "AllowGameDVR"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"; Name = "value"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_Enabled"; Type = "REG_DWORD"; Data = "1"; AdditionalArgs = "/f" },
-        @{ Command = "Reg.exe"; Path = "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"; Name = "AppCaptureEnabled"; Type = "REG_DWORD"; Data = ""; AdditionalArgs = "/v /f" }
+        @{ Command = "Delete"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DSEBehavior"; Type = "REG_DWORD"; Data = "" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_DXGIHonorFSEWindowsCompatible"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_EFSEFeatureFlags"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Delete"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehavior"; Type = "REG_DWORD"; Data = "" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_FSEBehaviorMode"; Type = "REG_DWORD"; Data = "2" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_HonorUserFSEBehaviorMode"; Type = "REG_DWORD"; Data = "0" },
+        @{ Command = "Delete"; Path = "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; Name = "__COMPAT_LAYER"; Type = "REG_SZ"; Data = "" },
+        @{ Command = "Delete"; Path = "HKCU\System\GameBar"; Name = "GamePanelStartupTipIndex"; Type = "REG_DWORD"; Data = "" },
+        @{ Command = "Delete"; Path = "HKCU\System\GameBar"; Name = "ShowStartupPanel"; Type = "REG_DWORD"; Data = "" },
+        @{ Command = "Delete"; Path = "HKCU\System\GameBar"; Name = "UseNexusForGameBarEnabled"; Type = "REG_DWORD"; Data = "" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Gaming.GameBar.PresenceServer.Internal.PresenceWriter"; Name = "ActivationType"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Policies\Microsoft\Windows\GameDVR"; Name = "AllowGameDVR"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Add"; Path = "HKLM\SOFTWARE\Microsoft\PolicyManager\default\ApplicationManagement\AllowGameDVR"; Name = "value"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Add"; Path = "HKCU\System\GameConfigStore"; Name = "GameDVR_Enabled"; Type = "REG_DWORD"; Data = "1" },
+        @{ Command = "Delete"; Path = "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR"; Name = "AppCaptureEnabled"; Type = "REG_DWORD"; Data = "" }
     )
 
     foreach ($cmd in $commands) {
-        Invoke-RegistryCommand @cmd
+        Invoke-RegistryCommand -Command $cmd.Command -Path $cmd.Path -Name $cmd.Name -Type $cmd.Type -Data $cmd.Data
     }
 
     Write-Output "FSO and Game Bar Support enabled."
