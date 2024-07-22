@@ -1,11 +1,4 @@
 <#
-.SYNOPSIS
-Disables SvcHostSplit for services not related to Xbox, Xbl, or BITS.
-
-.DESCRIPTION
-This script iterates through all services in the HKLM\SYSTEM\CurrentControlSet\Services registry path
-Excluding those related to Xbox, Xbl, or BITS, and sets the SvcHostSplitDisable value to 1 for each.
-
 .NOTES
 Author: Ibrahim
 Website: https://ibrpride.com
