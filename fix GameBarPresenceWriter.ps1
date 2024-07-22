@@ -1,3 +1,18 @@
+<#
+.SYNOPSIS
+Disables SvcHostSplit for services not related to Xbox, Xbl, or BITS.
+
+.DESCRIPTION
+This script iterates through all services in the HKLM\SYSTEM\CurrentControlSet\Services registry path
+Excluding those related to Xbox, Xbl, or BITS, and sets the SvcHostSplitDisable value to 1 for each.
+
+.NOTES
+Author: Ibrahim
+Website: https://ibrpride.com
+Script Version: 1.0
+Last Updated: July 2024
+#>
+
 # Check if running as administrator; if not, restart as admin
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "Restarting script with elevated privileges..." -ForegroundColor Yellow
