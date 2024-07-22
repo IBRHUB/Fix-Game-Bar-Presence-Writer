@@ -2,7 +2,7 @@
 .NOTES
 Author: Ibrahim
 Website: https://ibrpride.com
-Script Version: 1.1
+Script Version: 1.2
 Last Updated: July 2024
 #>
 
